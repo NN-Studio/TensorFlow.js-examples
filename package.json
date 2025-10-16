@@ -1,0 +1,17 @@
+{
+  "name": "tensorflow.js-examples",
+  "scripts": {
+    "dev": "oipage-cli serve --config ./oipage.config.js"
+  },
+  "author": "zxl20070701",
+  "license": "MIT",
+  "description": "一些简单的入门用例",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-vis": "^1.5.1",
+    "vislite": "^1.5.0"
+  },
+  "devDependencies": {
+    "oipage": "^1.4.1"
+  }
+}
