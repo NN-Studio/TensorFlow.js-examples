@@ -1,6 +1,8 @@
 # [TensorFlow.js-examples](https://github.com/NN-Studio/TensorFlow.js-examples)
 一些简单的入门用例
 
+> Google机器学习中文地址： https://developers.google.cn/machine-learning?hl=zh-cn
+
 ## 如何使用？
 
 安装后，直接启动：
