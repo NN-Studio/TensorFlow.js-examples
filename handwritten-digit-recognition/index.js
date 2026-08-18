@@ -51,6 +51,7 @@ data.load().then(function () {
         showConfusion(model, data);
 
         showInput(function (inputX) {
+            console.log(inputX)
 
             const imageTensor = tf.tidy(() => {
                 // Reshape the image to 28x28 px

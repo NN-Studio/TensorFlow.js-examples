@@ -1,8 +1,15 @@
 import tf from "@tensorflow/tfjs";
 
+/**
+ * 创建手写数字识别模型 (MNIST)
+ * 使用卷积神经网络 (CNN) 架构
+ * @returns {tf.Sequential} 返回训练好的模型
+ */
 export default function () {
+    // 创建一个顺序模型（层按顺序堆叠）
     const model = tf.sequential();
 
+    // MNIST 数据集图片规格：28x28 像素的灰度图
     const IMAGE_WIDTH = 28;
     const IMAGE_HEIGHT = 28;
     const IMAGE_CHANNELS = 1;
@@ -35,14 +42,19 @@ export default function () {
         kernelInitializer: 'varianceScaling'
     }));
 
+    // 最大池化层：降低特征图尺寸，减少计算量和过拟合
     model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
+
+    // 第二个卷积层：提取更高级的特征
     model.add(tf.layers.conv2d({
         kernelSize: 5,
-        filters: 16,
+        filters: 16,  // 增加过滤器数量，捕捉更多特征
         strides: 1,
         activation: 'relu',
         kernelInitializer: 'varianceScaling'
     }));
+
+    // 第二个最大池化层
     model.add(tf.layers.maxPooling2d({ poolSize: [2, 2], strides: [2, 2] }));
 
     // 展平数据表示法
@@ -51,19 +63,18 @@ export default function () {
     // 密集层（我们会用作最终层）只需要采用 tensor1d，因而此步骤在许多分类任务中很常见。
     model.add(tf.layers.flatten());
 
-    // 输出层
-    // 计算我们的最终概率分布
+    // 输出层：全连接层，输出 10 个数字的概率分布
     model.add(tf.layers.dense({
-        units: 10,
+        units: 10,  // 10 个输出对应 0-9 十个数字
         kernelInitializer: 'varianceScaling',
-        activation: 'softmax'
+        activation: 'softmax'  // 输出概率分布，总和为 1
     }));
 
-    // 选择优化器和损失函数
+    // 编译模型：配置优化器、损失函数和评估指标
     model.compile({
-        optimizer: tf.train.adam(),
-        loss: 'categoricalCrossentropy',
-        metrics: ['accuracy'],
+        optimizer: tf.train.adam(),  // Adam 优化器，自适应学习率
+        loss: 'categoricalCrossentropy',  // 多分类交叉熵损失
+        metrics: ['accuracy'],  // 监控准确率
     });
 
     return model;
